@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class OtpCodeMail extends Mailable
+class AddNewMemberEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -17,11 +17,10 @@ class OtpCodeMail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        private $name,
-        private $code
+        private $name
     )
     {
-        
+        //
     }
 
     /**
@@ -30,7 +29,7 @@ class OtpCodeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Code de confirmation',
+            subject: 'Message d\'ajout d\'un nouveau membre dans le groupe',
             from: new Address('accounts@unetah.net', 'Message de Inoush')
         );
     }
@@ -41,11 +40,9 @@ class OtpCodeMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.otpcode',
+            view: 'mails.addnewmember',
             with: [
-                'name' => $this->name,
-                'code' => $this->code,
-
+                'name' => $this->name
             ]
         );
     }

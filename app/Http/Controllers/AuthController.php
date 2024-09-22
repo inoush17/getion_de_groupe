@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Requests\ForgottenPasswordRequest;
 use App\Http\Requests\Requests\LoginRequest;
+use App\Http\Requests\Requests\NewPasswordRequest;
+use App\Http\Requests\Requests\OtpCodeRequest;
 use App\Http\Requests\Requests\RegisterRequest;
 use App\Interfaces\AuthInterface;
 use App\Models\User;
@@ -105,7 +107,7 @@ class AuthController extends Controller
                 return ApiResponse::sendResponse(
                     false,
                     [new UserResource($user)],
-                    'Opération invalide.',
+                    'Opération non effectué.',
                     500
                 );
         } catch (\Throwable $th) {
@@ -114,7 +116,7 @@ class AuthController extends Controller
         }
     }
 
-    public function checkOtpCode(Request $request)
+    public function checkOtpCode(OtpCodeRequest $request)
     {
         $data = [
             'email' => $request->email,
@@ -127,25 +129,58 @@ class AuthController extends Controller
 
             DB::commit();
 
-            if (!$user) {
+            if ($user)
 
                 return ApiResponse::sendResponse(
-                    false,
-                    [],
-                    'Code de Confirmation Invalide.',
+                    true,
+                    [new UserResource($user)],
+                    'Code de Confirmation valide.',
                     200
                 );
-            }
 
 
             return ApiResponse::sendResponse(
-                true,
-                'Opérations effectué.',
-                200
+                false,
+                'Opérations non effectué.',
+                500
             );
         } catch (\Throwable $th) {
 
-            return ApiResponse::rollback($th);
+            // return ApiResponse::rollback($th);
+            return $th;
+        }
+    }
+
+    public function newPassword(NewPasswordRequest $request)
+    {
+        $data = [
+            'password' => $request->password,
+        ];
+
+        DB::beginTransaction();
+        try {
+            $user = $this->authInterface->newPassword($data);
+
+            DB::commit();
+
+            if ($user)
+                return ApiResponse::sendResponse(
+                    true,
+                    [new UserResource($user)],
+                    'Opérations effectué.',
+                    200
+                );
+
+
+            return ApiResponse::sendResponse(
+                false,
+                'Opérations non effectué.',
+                500
+            );
+        } catch (\Throwable $th) {
+
+            // return ApiResponse::rollback($th);
+            return $th;
         }
     }
 

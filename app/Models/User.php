@@ -24,6 +24,11 @@ class User extends Authenticatable
         'is_confirmed'
     ];
 
+    public function group()
+    {
+        return $this->belongsToMany(Group::class, 'member');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

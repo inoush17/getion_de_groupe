@@ -5,6 +5,7 @@ use App\Interfaces\AuthInterface;
 use App\Mail\OtpCodeMail;
 use App\Models\OtpCode;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -67,11 +68,16 @@ class AuthRepository implements AuthInterface
             return $user;
         }
 
-        return false;
     }
 
     public function newPassword(array $data)
     {
+        $code = OtpCode::where('email', $data['email'])->first();
+
+        if(!$code)
+            return false;
+
+            
         
     }
 
