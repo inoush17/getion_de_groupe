@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('url');
+            $table->string('url')->nullable();
+            $table->string('description');
             $table->foreignId('group_id')->references('id')->on('groups');
             $table->timestamps();
         });

@@ -25,7 +25,8 @@ public function group()
 
     public function inviter()
     {
-        return $this->belongsTo(User::class, 'invited_by');
+        return $this->belongsTo(User::class);
+        // return $this->belongsTo(User::class, 'invited_by');
     }
 
 }

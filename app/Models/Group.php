@@ -11,7 +11,8 @@ class Group extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'admin_id'
     ];
 
     public function users()
@@ -19,8 +20,8 @@ class Group extends Model
         return $this->belongsToMany(User::class, 'member');
     }
 
-    public function admin()
-    {
-        return $this->belongsTo(User::class, 'admin_id');
-    }
+    // public function admin()
+    // {
+    //     return $this->belongsTo(User::class, 'admin_id');
+    // }
 }

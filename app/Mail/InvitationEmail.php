@@ -3,13 +3,14 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class AddNewMemberEmail extends Mailable
+class InvitationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,6 +19,8 @@ class AddNewMemberEmail extends Mailable
      */
     public function __construct(
         private $name,
+        private $email,
+        private $url,
     )
     {
         //
@@ -29,7 +32,7 @@ class AddNewMemberEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Message d\'ajout d\'un nouveau membre dans le groupe',
+            subject: 'Message d\'invitation',
             from: new Address('accounts@unetah.net', 'Message de Inoush')
         );
     }
@@ -40,9 +43,12 @@ class AddNewMemberEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mails.addnewmember',
+            view: 'mails.invitation',
             with: [
-                'name' => $this->name
+                'name' => $this->name,
+                'email' => $this->email,
+                'url' => $this->url,
+
             ]
         );
     }

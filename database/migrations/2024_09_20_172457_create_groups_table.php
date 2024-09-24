@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('description');
             $table->unsignedBigInteger('admin_id');
-            $table->foreign('admin_id')->references('id')->on('users');
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

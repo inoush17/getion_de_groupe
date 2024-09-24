@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Requests\GroupRequest;
+use App\Interfaces\GroupInterface;
+use App\Models\Group;
+use App\Models\User;
+use App\Resources\UserResource;
+use App\Responses\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GroupController extends Controller
 {
+
+    private GroupInterface $groupInterface;
+    public function __construct(GroupInterface $groupInterface)
+    {
+        $this->groupInterface = $groupInterface;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,6 +33,47 @@ class GroupController extends Controller
     public function create()
     {
         //
+    }
+    public function addMember()
+    {
+        //
+    }
+
+    public function groupList()
+    {
+        return ApiResponse::sendResponse(
+            true, 
+            [new UserResource(Group::all())],
+            'Opération effectuée.',
+            201
+        );
+
+    }
+    public function group(GroupRequest $groupRequest)
+    {
+        $data = [
+            'name' => $groupRequest->name,
+            'description' => $groupRequest->description,
+            'admin_id' => $groupRequest->admin_id,
+        ];
+
+        DB::beginTransaction();
+
+        try {
+            $user = $this->groupInterface->group($data);
+
+            DB::commit();
+
+            return ApiResponse::sendResponse(
+                true,
+                [new UserResource($user)],
+                'Opération effectuée.',
+                201
+            );
+        } catch (\Throwable $th) {
+
+            return ApiResponse::rollback($th);
+        }
     }
 
     /**

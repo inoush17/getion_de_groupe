@@ -13,6 +13,7 @@ class GroupServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // $this->app->bind(GroupInterface::class, GroupRepository::class);
         $this->app->bind(GroupInterface::class, GroupRepository::class);
 
     }

@@ -2,13 +2,18 @@
 
 namespace App\repositories;
 
-class GroupRepository
+use App\Interfaces\GroupInterface;
+use App\Models\Group;
+
+class GroupRepository implements GroupInterface
 {
     /**
      * Create a new class instance.
      */
-    public function __construct()
+    public function group(array $data)
     {
-        //
+        $groups = Group::create($data);
+
+        return $groups;
     }
 }

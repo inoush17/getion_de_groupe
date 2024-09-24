@@ -10,7 +10,18 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description'
+        'email',
+        'group_id'
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+        // return $this->hasMany(User::class, 'member');
+    }
+    public function group()
+    {
+        return $this->hasMany(Group::class);
+        // return $this->hasMany(User::class, 'member');
+    }
 }

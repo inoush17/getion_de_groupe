@@ -9,6 +9,8 @@
 <body>
     <h3>Bonjour, {{ $name }}</h3>
 
-    <h4>Un nouveau fichier vient d'être envoyé dans le groupe{{$name}}</h4>
+    <h1>{{ $email }}</h1>
+
+    <h4>Vous êtes invité par {{}} à accéder au groupe {{$name}}. Cliquez sur le lien {{$url}}</h4>
 </body>
 </html>

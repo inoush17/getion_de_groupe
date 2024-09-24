@@ -9,8 +9,6 @@
 <body>
     <h3>Bonjour, {{ $name }}</h3>
 
-    <h1>{{ $url }}</h1>
-
-    <h4>Utilisez ce lien pour accéder au groupe créer par {{}}</h4>
+    <h4>Un nouveau membre viendra accéder au groupe{{$name}}</h4>
 </body>
 </html>
