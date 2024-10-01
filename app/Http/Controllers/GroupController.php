@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Requests\GroupRequest;
 use App\Interfaces\GroupInterface;
 use App\Models\Group;
-use App\Models\User;
 use App\Resources\UserResource;
 use App\Responses\ApiResponse;
 use Illuminate\Http\Request;
@@ -54,7 +53,6 @@ class GroupController extends Controller
         $data = [
             'name' => $groupRequest->name,
             'description' => $groupRequest->description,
-            'admin_id' => $groupRequest->admin_id,
         ];
 
         DB::beginTransaction();

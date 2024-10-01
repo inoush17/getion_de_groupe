@@ -7,10 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h3>Bonjour, {{ $name }}</h3>
+    <h1>Invitation à rejoindre un groupe</h1>
+    
+    <h3>Bonjour, {{ $email }}</h3>
 
-    <h1>{{ $email }}</h1>
-
-    <h4>Vous êtes invité par {{}} à accéder au groupe {{$name}}. Cliquez sur le lien {{$url}}</h4>
-</body>
+    <p>Vous avez été invité à rejoindre un groupe. Cliquez sur le lien ci-dessous pour accepter l'invitation</p>
+    <a href="{{ $url }}">Accepter l'invitation</a>
 </html>

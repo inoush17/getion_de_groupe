@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('invitations', function (Blueprint $table) {
             $table->id();
             $table->string('email');  // Email de l'invité
-            $table->string('url')->nullable();
-            $table->foreignId('group_id')->references('id')->on('groups');  // Groupe auquel il est invité
-            $table->foreignId('invited_by')->references('id')->on('users');  // Utilisateur qui a fait l'invitation
+            $table->string('url');
+            $table->foreignId('group_id')->constrained('groups');  // Groupe auquel il est invité
+            $table->foreignId('invited_by')->constrained('users');  // Utilisateur qui a fait l'invitation
             $table->string('token')->nullable();  // Token unique pour l'invitation
             $table->boolean('is_registered')->default(0);  // Status d'inscription
             $table->timestamps();

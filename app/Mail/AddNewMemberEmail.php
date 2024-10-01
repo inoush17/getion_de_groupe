@@ -17,10 +17,12 @@ class AddNewMemberEmail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        private $name,
+        private $email,
+        // private $group_id
     )
+
     {
-        //
+        
     }
 
     /**
@@ -42,7 +44,8 @@ class AddNewMemberEmail extends Mailable
         return new Content(
             view: 'mails.addnewmember',
             with: [
-                'name' => $this->name
+                'email' => $this->email,
+                // 'group_id' => $this->group_id
             ]
         );
     }

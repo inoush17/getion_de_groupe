@@ -17,8 +17,9 @@ class SendNewFileEmail extends Mailable
      * Create a new message instance.
      */
     public function __construct(
-        private $name,
-        private $url,
+        private $email,
+        private $path,
+        private $sender,
         private $group_name
     )
     {
@@ -44,8 +45,9 @@ class SendNewFileEmail extends Mailable
         return new Content(
             view: 'mails.sendnewfile',
             with: [
-                'name' => $this->name,
-                'url' => $this->url,
+                'email' => $this->email,
+                'sender' => $this->sender,
+                'path' => $this->path,
                 'group_name' =>$this->group_name
 
             ]

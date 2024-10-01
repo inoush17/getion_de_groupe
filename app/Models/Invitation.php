@@ -9,16 +9,17 @@ class Invitation extends Model
 {
     use HasFactory;
 
-    protected $fillable = 
+    protected $fillable =
     [
-    'email', 
-    'group_id', 
-    'invited_by', 
-    'token', 
-    'is_registered'
-];
+        'email',
+        'url',
+        'group_id',
+        'invited_by',
+        'token',
+        'is_registered'
+    ];
 
-public function group()
+    public function group()
     {
         return $this->belongsTo(Group::class);
     }
@@ -28,5 +29,4 @@ public function group()
         return $this->belongsTo(User::class);
         // return $this->belongsTo(User::class, 'invited_by');
     }
-
 }

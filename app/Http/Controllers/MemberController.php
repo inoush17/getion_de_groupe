@@ -8,6 +8,7 @@ use App\Resources\UserResource;
 use App\Responses\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Str;
 
 class MemberController extends Controller
 {
@@ -17,30 +18,12 @@ class MemberController extends Controller
     {
         $this->memberInterface = $memberInterface;
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function member(MemberRequest $memberRequest)
     {
         $data = [
             'email' => $memberRequest->email,
-            'group_id' => $memberRequest->group_id,
+            // 'group_id' => $memberRequest->group_id,
         ];
 
         DB::beginTransaction();
@@ -57,44 +40,46 @@ class MemberController extends Controller
                 201
             );
         } catch (\Throwable $th) {
-            return ApiResponse::rollback($th);
+            // return ApiResponse::rollback($th);
+            return $th;
         }
     }
 
-    public function inviter(array $data)
-    {
+    // public function invitation(MemberRequest $memberRequest)
+    // {
+    //     // Créer un token unique
+    //     $token = str()::random(32);
+    //     $url = route('invitation', ['token' => $token]);
+
+    //     // Enregistrer l'invitation
+    //     $data = [
+    //         'email' => $memberRequest->email,
+    //         'url' => $memberRequest->url,
+    //         'group_id' => $memberRequest->groupId,
+    //         'invited_by' => $memberRequest->userId,
+    //         'token' => $memberRequest->token,
+    //         'is_registered' => false,
+    //     ];
+
+    //     DB::beginTransaction();
+
+    //     try {
+    //         $user = $this->memberInterface->member($data);
+
+    //         DB::commit();
+
+    //         return ApiResponse::sendResponse(
+    //             true,
+    //             [new UserResource($user)],
+    //             'Opération effectuée.',
+    //             201
+    //         );
+    //     } catch (\Throwable $th) {
+    //         // return ApiResponse::rollback($th);
+    //         return $th;
+    //     }
         
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+    //     return $invitation;
+    // }
 }

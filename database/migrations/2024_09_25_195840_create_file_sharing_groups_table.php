@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('file_sharing_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('url')->nullable();
-            $table->string('description');
-            $table->foreignId('group_id')->references('id')->on('groups');
+            $table->string('email');
+            $table->string('path');
+            $table->string('sender');
+            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('file_sharing_groups');
     }
 };
