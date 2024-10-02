@@ -19,6 +19,7 @@ class FileSharingGroupController extends Controller
 
     public function filesharinggroup(FileSharingGroupRequest $filesharingsroupRequest)
     {
+        $path = 'null';
 
         if ($filesharingsroupRequest->hasFile('file')){
             $file = $filesharingsroupRequest->file('file');

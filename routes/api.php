@@ -34,7 +34,7 @@ Route::prefix('v1.0.0')->group(function () {
 
     Route::get('users', [UserController::class, 'listUser']);
     Route::get('groups', [GroupController::class, 'groupList']);
-    Route::get('file-sharing', [FileSharingGroupController::class, 'filesharinggroup']);
+    Route::post('file-sharing', [FileSharingGroupController::class, 'filesharinggroup']);
 
     Route::post('create-member', [MemberController::class, 'member'])->name('invitation');
     Route::post('create-group', [GroupController::class, 'group']);

@@ -15,7 +15,7 @@ class FileSharingGroupRepository implements FileSharingGroupInterface
     {
         $filesharing = FileSharingGroup::create($data);
 
-        Mail::to($data['email'])->send(new SendNewFileEmail($data['email']));
+        // Mail::to($data['email'])->send(new SendNewFileEmail($data['email']));
 
         return $filesharing;
     }
