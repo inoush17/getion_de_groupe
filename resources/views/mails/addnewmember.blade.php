@@ -11,9 +11,8 @@
 <body>
     <h3>Bonjour, {{ $email }}</h3>
 
-    <p>un nouveau membre a rejoint notre groupe  !</p>
-    <p>Acceuillez-la comme il se doit une fois dans le groupe !</p>
+    <p>un nouveau membre viendra rejoindre notre groupe  !</p>
+    <p>Acceuillez-le comme il se doit une fois intégrer le groupe !</p>
 </body>
 
 </html>
-{{-- {{ $group_id }} --}}

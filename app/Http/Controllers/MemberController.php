@@ -19,11 +19,11 @@ class MemberController extends Controller
         $this->memberInterface = $memberInterface;
     }
 
-    public function member(MemberRequest $memberRequest)
+    public function member(MemberRequest $memberRequest, $group_id)
     {
         $data = [
             'email' => $memberRequest->email,
-            // 'group_id' => $memberRequest->group_id,
+            'group_id' => $group_id,
         ];
 
         DB::beginTransaction();
@@ -45,41 +45,42 @@ class MemberController extends Controller
         }
     }
 
-    // public function invitation(MemberRequest $memberRequest)
-    // {
-    //     // Créer un token unique
-    //     $token = str()::random(32);
-    //     $url = route('invitation', ['token' => $token]);
+    public function invitation(MemberRequest $memberRequest)
+    {
+        // Créer un token unique
+        // $token = str()::random(32);
+        // $url = route('invitation', ['token' => $token]);
 
-    //     // Enregistrer l'invitation
-    //     $data = [
-    //         'email' => $memberRequest->email,
-    //         'url' => $memberRequest->url,
-    //         'group_id' => $memberRequest->groupId,
-    //         'invited_by' => $memberRequest->userId,
-    //         'token' => $memberRequest->token,
-    //         'is_registered' => false,
-    //     ];
+        // Enregistrer l'invitation
+        $data = [
+            'email' => $memberRequest->email,
+            'url' => $memberRequest->url,
+            'group_id' => $memberRequest->groupId,
+            'invited_by' => $memberRequest->userName,
+            'token' => $memberRequest->token,
+            'is_registered' => false,
+        ];
 
-    //     DB::beginTransaction();
+        DB::beginTransaction();
 
-    //     try {
-    //         $user = $this->memberInterface->member($data);
+        try {
+            $user = $this->memberInterface->member($data);
 
-    //         DB::commit();
+            DB::commit();
 
-    //         return ApiResponse::sendResponse(
-    //             true,
-    //             [new UserResource($user)],
-    //             'Opération effectuée.',
-    //             201
-    //         );
-    //     } catch (\Throwable $th) {
-    //         // return ApiResponse::rollback($th);
-    //         return $th;
-    //     }
+            return ApiResponse::sendResponse(
+                true,
+                [new UserResource($user)],
+                'Opération effectuée.',
+                201
+            );
+        } catch (\Throwable $th) {
+            // return ApiResponse::rollback($th);
+            return $th;
+        }
         
 
     //     return $invitation;
     // }
+    }
 }

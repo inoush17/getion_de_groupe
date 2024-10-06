@@ -5,6 +5,6 @@ namespace App\Interfaces;
 interface MemberInterface
 {
     public function member(array $data);
-    // public function invitation(array $data);
-    // public function Token(string $token);
+    public function invitation(array $data);
+    public function Token(string $token);
 }

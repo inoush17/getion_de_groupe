@@ -11,6 +11,6 @@
     
     <h3>Bonjour, {{ $email }}</h3>
 
-    <p>Vous avez été invité à rejoindre un groupe. Cliquez sur le lien ci-dessous pour accepter l'invitation</p>
+    <p>Vous avez été invité par {{ $invited_by }} à rejoindre un groupe {{ $group_id }}. Cliquez sur le lien ci-dessous pour accepter l'invitation</p>
     <a href="{{ $url }}">Accepter l'invitation</a>
 </html>

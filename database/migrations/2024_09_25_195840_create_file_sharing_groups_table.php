@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('file_sharing_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
             $table->string('path');
-            $table->string('sender');
             $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+         
             $table->timestamps();
         });
     }

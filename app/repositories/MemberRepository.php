@@ -18,20 +18,28 @@ class MemberRepository implements MemberInterface
     {
         $members = Member::create($data);
 
-        
-        Mail::to($data['email'])->send(new AddNewMemberEmail($data['email']));
+
+        Mail::to($data['email'])->send(new AddNewMemberEmail(
+            $data['email'],
+            $data['group_id']
+        ));
 
 
         return $members;
     }
-    // public function invitation(array $data)
-    // {
-    //     $invite = Invitation::create($data);
+    public function invitation(array $data)
+    {
+        $invite = Invitation::create($data);
 
-    //     Mail::to($data['email'])->send(new InvitationEmail($data['email']));
+        Mail::to($data['email'])->send(new InvitationEmail(
+            $data['email'],
+            $data['url'],
+            $data['group_id'],
+            $data['invited_by']
+        ));
 
-    //     return $invite;
-    // }
+        return $invite;
+    }
 
     public function Token(string $token)
     {

@@ -18,7 +18,7 @@ class AddNewMemberEmail extends Mailable
      */
     public function __construct(
         private $email,
-        // private $group_id
+        private $group_id
     )
 
     {
@@ -45,7 +45,7 @@ class AddNewMemberEmail extends Mailable
             view: 'mails.addnewmember',
             with: [
                 'email' => $this->email,
-                // 'group_id' => $this->group_id
+                'group_id' => $this->group_id
             ]
         );
     }

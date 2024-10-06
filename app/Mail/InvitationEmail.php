@@ -20,6 +20,8 @@ class InvitationEmail extends Mailable
     public function __construct(
         private $email,
         private $url,
+        private $group_id,
+        private $invited_by
     )
     {
         //
@@ -46,6 +48,8 @@ class InvitationEmail extends Mailable
             with: [
                 'email' => $this->email,
                 'url' => $this->url,
+                'group_id' => $this->group_id,
+                'invited_by' => $this->invited_by
 
             ]
         );

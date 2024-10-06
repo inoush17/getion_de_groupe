@@ -19,6 +19,11 @@ class Group extends Model
         return $this->belongsToMany(User::class, 'member');
     }
 
+
+    public function fileSharingGroups()
+    {
+        return $this->hasMany(FileSharingGroup::class, 'group_id');
+    }
     // public function admin()
     // {
     //     return $this->belongsTo(User::class, 'admin_id');

@@ -29,13 +29,13 @@ Route::prefix('v1.0.0')->group(function () {
 
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('logout', [AuthController::class, 'logout']);
-        
     });
 
     Route::get('users', [UserController::class, 'listUser']);
     Route::get('groups', [GroupController::class, 'groupList']);
-    Route::post('file-sharing', [FileSharingGroupController::class, 'filesharinggroup']);
+    Route::get('file_sharing_group/{groupId}', [FileSharingGroupController::class, 'fileSharingGroupList']);
 
-    Route::post('create-member', [MemberController::class, 'member'])->name('invitation');
+    Route::post('file-sharing/{groupId}', [FileSharingGroupController::class, 'filesharinggroup']);
+    Route::post('add-member/{group_id}', [MemberController::class, 'member']);
     Route::post('create-group', [GroupController::class, 'group']);
 });

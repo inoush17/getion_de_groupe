@@ -81,4 +81,9 @@ class AuthRepository implements AuthInterface
         
     }
 
+    public function logout(array $data)
+    {
+        
+    }
+
 }

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Requests\FileSharingGroupRequest;
 use App\Interfaces\FileSharingGroupInterface;
+use App\Models\FileSharingGroup;
 use App\Resources\UserResource;
 use App\Responses\ApiResponse;
+use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,24 +19,14 @@ class FileSharingGroupController extends Controller
         $this->fileSharingGroupInterface = $fileSharingGroupInterface;
     }
 
-    public function filesharinggroup(FileSharingGroupRequest $filesharingsroupRequest)
+    public function filesharinggroup(FileSharingGroupRequest $filesharingroupRequest, $groupId)
     {
-        $path = 'null';
-
-        if ($filesharingsroupRequest->hasFile('file')){
-            $file = $filesharingsroupRequest->file('file');
-            $path = $file->getClientOriginalPath();
-        }
 
         $data = [
-            'email' => $filesharingsroupRequest->email,
-            'path' => $path,
-            'sender' => 'inoush',
-            // 'sender' =>$fileSharingGroupRequest->sender,
-            'group_id' => 2,
-            // 'group_id' =>$fileSharingGroupRequest->group_id,
-            'user_id' => 2,
-            // 'user_id' =>$fileSharingGroupRequest->user_id,
+
+            'path' => $filesharingroupRequest->file,
+           'group_id' => $groupId,
+           
         ];
 
         DB::beginTransaction();
@@ -55,5 +47,23 @@ class FileSharingGroupController extends Controller
             // return ApiResponse::rollback($th);
             return $th;
         }
+    }
+
+    public function fileSharingGroupList($groupId)
+    {
+
+        $group = Group::findOrFail($groupId);
+
+        $files = $group->fileSharingGroups()->get(['id', 'path', 'created_at', 'user_id']);
+
+
+return response()->json(['file_sharing_groups' => $files]);
+
+        // return ApiResponse::sendResponse(
+        //     true,
+        //     [new UserResource(FileSharingGroup::all())],
+        //     'Opération effectuée.',
+        //     201
+        // );
     }
 }
