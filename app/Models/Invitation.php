@@ -12,11 +12,11 @@ class Invitation extends Model
     protected $fillable =
     [
         'email',
-        'url',
         'group_id',
         'invited_by',
-        'token',
-        'is_registered'
+        'user_id',
+
+        
     ];
 
     public function group()

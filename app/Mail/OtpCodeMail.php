@@ -31,7 +31,7 @@ class OtpCodeMail extends Mailable
     {
         return new Envelope(
             subject: 'Code de confirmation',
-            from: new Address('accounts@unetah.net', 'Message de Inoush')
+            from: new Address('accounts@unetah.net', 'A_G_G')
         );
     }
 

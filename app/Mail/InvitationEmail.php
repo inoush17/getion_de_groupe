@@ -19,9 +19,9 @@ class InvitationEmail extends Mailable
      */
     public function __construct(
         private $email,
-        private $url,
         private $group_id,
-        private $invited_by
+        private $invited_by,
+        private $group_name,
     )
     {
         //
@@ -34,7 +34,7 @@ class InvitationEmail extends Mailable
     {
         return new Envelope(
             subject: 'Message d\'invitation',
-            from: new Address('accounts@unetah.net', 'Message de Inoush')
+            from: new Address('accounts@unetah.net', 'A_G_G')
         );
     }
 
@@ -47,9 +47,9 @@ class InvitationEmail extends Mailable
             view: 'mails.invitation',
             with: [
                 'email' => $this->email,
-                'url' => $this->url,
                 'group_id' => $this->group_id,
-                'invited_by' => $this->invited_by
+                'invited_by' => $this->invited_by,
+                'group_name' => $this->group_name,
 
             ]
         );

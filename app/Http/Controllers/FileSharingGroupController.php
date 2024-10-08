@@ -8,6 +8,7 @@ use App\Models\FileSharingGroup;
 use App\Resources\UserResource;
 use App\Responses\ApiResponse;
 use App\Models\Group;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,14 +20,15 @@ class FileSharingGroupController extends Controller
         $this->fileSharingGroupInterface = $fileSharingGroupInterface;
     }
 
-    public function filesharinggroup(FileSharingGroupRequest $filesharingroupRequest, $groupId)
+    public function filesharinggroup(FileSharingGroupRequest $filesharingroupRequest, $groupId, $user_id)
     {
 
         $data = [
 
             'path' => $filesharingroupRequest->file,
-           'group_id' => $groupId,
-           
+            'group_id' => $groupId,
+            'user_id' => $user_id
+
         ];
 
         DB::beginTransaction();
@@ -52,18 +54,24 @@ class FileSharingGroupController extends Controller
     public function fileSharingGroupList($groupId)
     {
 
+        $fileInfos = [];
+
         $group = Group::findOrFail($groupId);
 
-        $files = $group->fileSharingGroups()->get(['id', 'path', 'created_at', 'user_id']);
+        $files = $group->filesharingGroups()->get(['id', 'path', 'created_at', 'user_id']);
 
+        foreach ($files as $file) {
+            $infoFile = [];
+            $infoUser = [];
+            array_push($infoUser, User::findOrFail($file->user_id));
+            array_push($infoFile, $file);
+            $allInfos = [
+                'user' => $infoUser,
+                'file' => $infoFile,
+            ];
+            array_push($fileInfos, $allInfos);
+        }
 
-return response()->json(['file_sharing_groups' => $files]);
-
-        // return ApiResponse::sendResponse(
-        //     true,
-        //     [new UserResource(FileSharingGroup::all())],
-        //     'Opération effectuée.',
-        //     201
-        // );
+        return response()->json(['file_sharing_groups' => $fileInfos]);
     }
 }

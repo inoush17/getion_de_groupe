@@ -51,4 +51,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function fileSharingGroup()
+    {
+        return $this->hasMany(FileSharingGroup::class);
+        }
 }

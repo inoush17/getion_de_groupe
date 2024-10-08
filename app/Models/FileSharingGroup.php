@@ -10,14 +10,13 @@ class FileSharingGroup extends Model
     use HasFactory;
 
     protected $fillable = [
-       
+
         'path',
-       
         'group_id',
         'user_id'
     ];
 
-  
+
     public function group()
     {
         return $this->belongsTo(Group::class, 'group_id');
@@ -26,5 +25,10 @@ class FileSharingGroup extends Model
     public function inviter()
     {
         return $this->belongsTo(User::class, 'invited_by');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

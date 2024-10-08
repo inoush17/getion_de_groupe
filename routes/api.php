@@ -28,14 +28,15 @@ Route::prefix('v1.0.0')->group(function () {
 
 
     Route::middleware(['auth:sanctum'])->group(function () {
+
+
+        Route::post('file-sharing/{groupId}/{user_id}', [FileSharingGroupController::class, 'filesharinggroup']);
+        Route::get('file_sharing_group/{groupId}', [FileSharingGroupController::class, 'fileSharingGroupList']);
+        Route::get('users', [UserController::class, 'listUser']);
+        Route::get('groups', [GroupController::class, 'groupList']);
+        Route::get('members-group/{id}', [MemberController::class, 'membersGroup']);
         Route::get('logout', [AuthController::class, 'logout']);
+        Route::post('add-member/{group_id}', [MemberController::class, 'member']);
+        Route::post('create-group', [GroupController::class, 'group']);
     });
-
-    Route::get('users', [UserController::class, 'listUser']);
-    Route::get('groups', [GroupController::class, 'groupList']);
-    Route::get('file_sharing_group/{groupId}', [FileSharingGroupController::class, 'fileSharingGroupList']);
-
-    Route::post('file-sharing/{groupId}', [FileSharingGroupController::class, 'filesharinggroup']);
-    Route::post('add-member/{group_id}', [MemberController::class, 'member']);
-    Route::post('create-group', [GroupController::class, 'group']);
 });

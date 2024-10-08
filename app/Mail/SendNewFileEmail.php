@@ -33,7 +33,7 @@ class SendNewFileEmail extends Mailable
     {
         return new Envelope(
             subject: 'Message d\'envoie d\'un nouveau fichier dans le groupe',
-            from: new Address('accounts@unetah.net', 'Message de Inoush')
+            from: new Address('accounts@unetah.net', 'A_G_G')
         );
     }
 

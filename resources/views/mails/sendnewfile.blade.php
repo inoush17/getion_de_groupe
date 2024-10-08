@@ -9,6 +9,7 @@
 <body>
     <h3>Bonjour, {{ $email }}</h3>
 
-    <h4>Un nouveau fichier vient d'être envoyé dans le groupe</h4>
+    <h4>{{ $sender }} vient d'envoyé un nouveau fichier dans le groupe {{ $group_name }}</h4>
+    voici le chemin {{ $path }}
 </body>
 </html>

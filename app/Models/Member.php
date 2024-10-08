@@ -11,7 +11,8 @@ class Member extends Model
 
     protected $fillable = [
         'email',
-        'group_id'
+        'group_id',
+        'user_id'
     ];
 
     public function users()

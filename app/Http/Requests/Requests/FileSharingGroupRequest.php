@@ -23,6 +23,7 @@ class FileSharingGroupRequest extends FormRequest
     {
         return [
             'file' => 'nullable|mimes:jpeg,png,mp4,jpg,pdf,doc,docx,xlsx|max:10048',
+           
         ];
     }
 

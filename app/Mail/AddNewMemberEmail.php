@@ -32,7 +32,7 @@ class AddNewMemberEmail extends Mailable
     {
         return new Envelope(
             subject: 'Message d\'ajout d\'un nouveau membre dans le groupe',
-            from: new Address('accounts@unetah.net', 'Message de Inoush')
+            from: new Address('accounts@unetah.net', 'A_G_G')
         );
     }
 
