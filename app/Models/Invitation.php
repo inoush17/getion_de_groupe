@@ -14,7 +14,7 @@ class Invitation extends Model
         'email',
         'group_id',
         'invited_by',
-        'user_id',
+        // 'user_id',
 
         
     ];

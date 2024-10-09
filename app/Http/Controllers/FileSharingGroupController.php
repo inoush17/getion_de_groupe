@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Requests\FileSharingGroupRequest;
 use App\Interfaces\FileSharingGroupInterface;
-use App\Models\FileSharingGroup;
 use App\Resources\UserResource;
 use App\Responses\ApiResponse;
 use App\Models\Group;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FileSharingGroupController extends Controller

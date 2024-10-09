@@ -18,7 +18,7 @@ class AddNewMemberEmail extends Mailable
      */
     public function __construct(
         private $email,
-        private $group_id
+        private $group_id,
     )
 
     {

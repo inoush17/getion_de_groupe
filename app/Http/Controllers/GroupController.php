@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Requests\GroupRequest;
 use App\Interfaces\GroupInterface;
 use App\Models\Group;
+use App\Models\Member;
+use App\Models\User;
 use App\Resources\UserResource;
 use App\Responses\ApiResponse;
 use Illuminate\Http\Request;
@@ -40,9 +42,18 @@ class GroupController extends Controller
 
     public function groupList()
     {
+
+        $userId = auth()->id();
+
+        $user = User::find($userId);
+
+        $members = Member::where('email', $user->email)->get();
+        $groupIds = $members->pluck('group_id');
+        $groups = Group::whereIn('id',$groupIds)->get();
+
         return ApiResponse::sendResponse(
             true, 
-            [new UserResource(Group::all())],
+            [$groups],
             'Opération effectuée.',
             201
         );
@@ -50,9 +61,11 @@ class GroupController extends Controller
     }
     public function group(GroupRequest $groupRequest)
     {
+
         $data = [
             'name' => $groupRequest->name,
             'description' => $groupRequest->description,
+            'admin_id'=>auth()->id()
         ];
 
         DB::beginTransaction();
@@ -72,45 +85,5 @@ class GroupController extends Controller
 
             return ApiResponse::rollback($th);
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

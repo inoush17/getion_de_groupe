@@ -11,5 +11,6 @@
     
     <h3>Bonjour, {{ $email }}</h3>
 
-    <p>Vous avez été invité par {{ $invited_by }} à rejoindre le groupe {{ $group_name }}.
+    <p>Vous êtes invité par {{ $invited_by }} à rejoindre le groupe {{ $group_name }}.
+    <p>Veuillez-vous s'inscrire et connecter pour y avoir accès à l'application</p>
 </html>

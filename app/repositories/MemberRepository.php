@@ -5,6 +5,8 @@ namespace App\repositories;
 use App\Interfaces\MemberInterface;
 use App\Mail\AddNewMemberEmail;
 use App\Mail\InvitationEmail;
+use App\Mail\SendEmailNewMember;
+use App\Models\Group;
 use App\Models\Invitation;
 use App\Models\Member;
 use Illuminate\Support\Facades\Mail;
@@ -16,27 +18,8 @@ class MemberRepository implements MemberInterface
      */
     public function member(array $data)
     {
-        $members = Member::create($data);
+        $newMember = Member::create($data);
 
-
-        Mail::to($data['email'])->send(new AddNewMemberEmail(
-            $data['email'],
-            $data['group_id']
-        ));
-
-
-        return $members;
+        return $newMember;
     }
-    // public function invitation(array $data)
-    // {
-    //     $invite = Invitation::create($data);
-
-    //     Mail::to($data['email'])->send(new InvitationEmail(
-    //         $data['email'],
-    //         $data['group_id'],
-    //         $data['invited_by']
-    //     ));
-
-    //     return $invite;
-    // }
 }

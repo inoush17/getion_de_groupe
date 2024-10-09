@@ -22,7 +22,7 @@ class MemberRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => 'required|min:3|max:128|email',
+            'email' => 'required|min:3|max:128|email|unique:members',
         ];
     }
 

@@ -11,6 +11,7 @@ use App\Models\Member;
 use App\Resources\UserResource;
 use App\Responses\ApiResponse;
 use App\Models\User;
+use App\Mail\AddNewMemberEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -29,20 +30,21 @@ class MemberController extends Controller
     {
         DB::beginTransaction();
 
+        $data = [
+            'email' => $memberRequest->email,
+            'group_id' => $group_id,
+            'invited_by' => auth()->id(),
+        ];
+
+
         try {
             $user = User::where('email', $memberRequest->email)->first();
 
             if (!$user) {
 
-                $data = [
-                    'email' => $memberRequest->email,
-                    'group_id' => $group_id,
-                    'invited_by' => auth()->id(),
-                ];
-    
                 $invitation = Invitation::create($data);
 
-                $groupe = Group::findOrFail($group_id);
+                $group = Group::findOrFail($group_id);
 
                 $user = User::findOrFail($data['invited_by']);
 
@@ -50,24 +52,37 @@ class MemberController extends Controller
                     $data['email'],
                     $data['group_id'],
                     $user->email,
-                    $groupe->name
+                    $group->name
                 ));
 
+                DB::commit();
                 return ApiResponse::sendResponse(
                     true,
                     [new UserResource($invitation)],
                     200
                 );
+
+            } else {
+
+                $group_members = Member::where('group_id', $data['group_id'])->get();
+
+                if ($group_members->isNotEmpty()) {
+                    foreach ($group_members as $member) {
+                        Mail::to($member->email)->send(new AddNewMemberEmail(
+                            $data['email'],
+                            $data['group_id']
+                        ));
+                    }
+                }    
             }
-            
+
             $data = [
                 'email' => $memberRequest->email,
                 'group_id' => $group_id,
-                'user_id' => $user->id 
+                'user_id' => $user->id
             ];
 
             $newMember = $this->memberInterface->member($data);
-
             DB::commit();
 
             return ApiResponse::sendResponse(
@@ -76,6 +91,7 @@ class MemberController extends Controller
                 'Opération effectuée.',
                 201
             );
+
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -111,44 +127,5 @@ class MemberController extends Controller
                 500
             );
         }
-    }
-
-    public function invitation(MemberRequest $memberRequest)
-    {
-        // Créer un token unique
-        // $token = str()::random(32);
-        // $url = route('invitation', ['token' => $token]);
-
-        // Enregistrer l'invitation
-        $data = [
-            'email' => $memberRequest->email,
-            'url' => $memberRequest->url,
-            'group_id' => $memberRequest->groupId,
-            'invited_by' => $memberRequest->userName,
-            'token' => $memberRequest->token,
-            'is_registered' => false,
-        ];
-
-        DB::beginTransaction();
-
-        try {
-            $user = $this->memberInterface->member($data);
-
-            DB::commit();
-
-            return ApiResponse::sendResponse(
-                true,
-                [new UserResource($user)],
-                'Opération effectuée.',
-                201
-            );
-        } catch (\Throwable $th) {
-            // return ApiResponse::rollback($th);
-            return $th;
-        }
-
-
-        //     return $invitation;
-        // }
     }
 }

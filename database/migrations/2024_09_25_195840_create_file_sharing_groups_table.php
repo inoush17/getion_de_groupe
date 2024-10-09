@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('file_sharing_groups', function (Blueprint $table) {
             $table->id();
             $table->string('path');
-            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained('groups')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

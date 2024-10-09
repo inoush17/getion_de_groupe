@@ -21,7 +21,7 @@ class FileSharingGroupRepository implements FileSharingGroupInterface
         $users_id = Member::where('group_id', $data['group_id'])->pluck('user_id');
 
         $sender = User::findOrFail($data['user_id']);
-        $groupe = Group::find($data['group_id']);
+        $group = Group::find($data['group_id']);
 
         foreach ($users_id as $id) {
             $user = User::findOrFail($id);
@@ -29,7 +29,7 @@ class FileSharingGroupRepository implements FileSharingGroupInterface
                 $user->email,
                 $filesharing->path,
                 $sender->email,
-                $groupe->name
+                $group->name
 
                 // $data['sender'],
             ));

@@ -12,6 +12,7 @@ class Group extends Model
     protected $fillable = [
         'name',
         'description',
+        'admin_id'
     ];
 
     public function users()
